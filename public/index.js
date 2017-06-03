@@ -153,7 +153,7 @@ $(function () {
                     .html(
                         userList.reduce((acc, val) => {
                             return `${acc}
-                            <li class='list-group-item' data-toggle="tooltip" data-placement="top" title="单击私聊" uid="${val.id}" uname="${val.name}">
+                            <li class='list-group-item' data-toggle="tooltip" data-placement="top" title="双击私聊" uid="${val.id}" uname="${val.name}">
                                 ${val.name}${val.typing ? '&nbsp;|&nbsp;正在输入...' : ''}
                                 ${this.getBadge(val)}
                             </li>`;
@@ -161,6 +161,12 @@ $(function () {
                     )
                     .children()
                     .tooltip();
+            });
+            /**
+             * 系统通知自己
+             */
+            socket.on('self:notify self', (msg) => {
+                this.newMsg(msg, 'danger');
             });
         }
         privateChar(){

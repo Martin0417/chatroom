@@ -18,6 +18,7 @@ let handle = (io, socket) => {
     let privateChat      = _.notifyone('chat message');//发送私信给某人
     let chatMessage      = _.notifyother(socket, 'chat message');//发送消息给其他人
     let addUserSuccess   = _.notifyself(socket, 'add user success');//用户添加成功
+    let notifyself       = _.notifyself(socket, 'notify self');//系统通知自己
 
     _.log('a user connected');
     // 初始化在线用户列表
@@ -27,10 +28,14 @@ let handle = (io, socket) => {
      */
     socket.on('chat message', (_msg) => {
         if(_.isPrivate(_msg)){
-            let {id, msg} = _.getPrivateInfo(_msg);
+            let {id, name, msg} = _.getPrivateInfo(_msg);
             let targetSocket = socketMap[id];
 
-            privateChat(targetSocket, user.name, msg);
+            if(targetSocket){
+                privateChat(targetSocket, user.name, msg);
+            }else{//已下线
+                notifyself(`（系统）${name} 已下线，消息未送达...`);
+            }
         }else{
             let msg = `${user.name}：${_msg}`;
             chatMessage(msg);
