@@ -26,9 +26,12 @@ _.notifyother = (socket, event) => (...arg) => {
 
 _.getRamId = () => + new Date + "" + Math.floor( Math.random()*899 + 100 );
 
-_.getRamColor = () => "#"+(~~(Math.random()*(1<<24))).toString(16);
+_.getRamColor = () => "#"+_.fillZero( (~~(Math.random()*16777215)).toString(16), 6 );//parseInt('ffffff', 16) or (1<<24)-1
 
-_.fillZero = (num) => ('0'+num).slice(-2);
+_.fillZero = (num, len) => {
+    len = len || 2;
+    return (Array(len).fill(0).join('')+num).slice(-len);
+}
 
 _.now = () => new Date;
 

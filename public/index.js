@@ -48,15 +48,26 @@ $(function () {
          */
         afterLogin() {
             $('body').append(
-                `<form id="j-msgForm" class="msgForm" action="">
-                    <input id="j-msgInput" autocomplete="off" /><button>发送</button>
-                </form>`
+                `<div class="formBox">
+                    <form id="j-msgForm" class="msgForm" action="">
+                        <input id="j-msgInput" class="msgInput" autocomplete="off" /><button>发送</button>
+                    </form>
+                    <label class="imgLabel" for="j-imgInput">发送图片</label>
+                    <form id="j-imgForm" class="imgForm" action="">
+                        <input id="j-imgInput" type="file" accept="image/*"/>
+                    </form>
+                </div>`
             );
 
-            this.msgForm = $('#j-msgForm');
-            this.msgInput = $('#j-msgInput');
+            Object.assign(this, {
+                msgForm: $('#j-msgForm'),
+                msgInput: $('#j-msgInput'),
+                imgInput: $('#j-imgInput')
+            });
             //绑定消息发送事件
             this.bindSendMsg();
+            //绑定图片发送
+            this.bindSendImg();
             //绑定是否正在输入事件
             this.bindTyping();
         }
@@ -83,6 +94,38 @@ $(function () {
                 this.msgInput.focus();
                 return false;
             });
+        }
+        /**
+         * 发送图片 
+         */
+        bindSendImg() {
+            this.imgInput.change((e) => {
+                let input = e.target;
+                let files = input.files || [];
+                if(files.length > 0){
+                    if(this.supportFileReader()){
+                        let file = files[0];
+                        let reader = new FileReader();
+                        reader.onload = (e) => {
+                            let imgUrl = e.target.result;
+                            this.newImg(`（我）${this.user.name}`, imgUrl, 'success');
+                            this.socket.emit('chat image', this.user.name , imgUrl);
+                        }
+                        reader.readAsDataURL(file);
+                    }else{
+                        input.value = '';
+                        alert('很遗憾！您的浏览器不支持file reader，无法发送图片');
+                        return false;
+                    }
+                }
+            });
+        }
+        supportFileReader(){
+            let support = !!FileReader;
+            this.supportFileReader = function(){
+                return support;
+            }
+            return support;
         }
         /**
          * 私信
@@ -136,6 +179,12 @@ $(function () {
             /**
              * 接收聊天信息 
              */
+            socket.on('other:chat image', (name, msg) => {
+                this.newImg(name, msg);
+            });
+            /**
+             * 接收图片信息 
+             */
             socket.on('other:chat message', (msg) => {
                 this.newMsg(msg);
             });
@@ -179,9 +228,12 @@ $(function () {
                 .focus();
             });
         }
-
+        
         newMsg(msg='', clazz='') {
             return this.msgBox.append(`<tr class='${clazz}'><td>${msg}</td></tr>`);
+        }
+        newImg(name='', imgUrl='', clazz='') {
+            this.newMsg(`${name}：<img width="60%" src="${imgUrl}">`);
         }
         getBadge(user={}) {
             return user.private > 0 ? `<span class="badge">${user.private}</span>` : '';

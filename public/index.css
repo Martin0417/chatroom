@@ -1,11 +1,19 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font: 13px Helvetica, Arial; }
-.msgForm { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-.msgForm input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+
+.formBox{display: flex; justify-content: space-between;align-items: center; position: fixed; bottom: 0; padding: 3px;  width: 100%;background: #000;}
+
+.msgForm {display: flex; justify-content: space-between;align-items: center; width: 90%; }
+.msgForm .msgInput { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
 .msgForm button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+
+.imgLabel{border: 0; margin-bottom: 0; padding: 10px; width: 9%; text-align: center; font-weight: normal; background: rgb(130, 224, 255); cursor: pointer;}
+.imgForm{display: none;}
 
 .userList{
     position: fixed;top:0;right:0;
     width:200px;
     transition: all 1s ease;
 }
+
+.messagesBox img{ vertical-align: bottom;}

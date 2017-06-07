@@ -17,6 +17,7 @@ let handle = (io, socket) => {
     let userLeave        = _.boardcast(io, 'user leave');//用户离开
     let privateChat      = _.notifyone('chat message');//发送私信给某人
     let chatMessage      = _.notifyother(socket, 'chat message');//发送消息给其他人
+    let chatImage        = _.notifyother(socket, 'chat image');//发送图片给其他人
     let addUserSuccess   = _.notifyself(socket, 'add user success');//用户添加成功
     let notifyself       = _.notifyself(socket, 'notify self');//系统通知自己
 
@@ -40,6 +41,12 @@ let handle = (io, socket) => {
             let msg = `${user.name}：${_msg}`;
             chatMessage(msg);
         }
+    });
+    /**
+     * 接受客户端的图片信息
+     */
+    socket.on('chat image', (name, img) => {
+        chatImage(name, img);
     });
     /**
      * 新建用户
