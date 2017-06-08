@@ -1,3 +1,5 @@
+import m from './message.js';
+
 $(function () {
 
     class chatRoom {
@@ -84,10 +86,10 @@ $(function () {
                 if(this.isPrivate(value)){
                     let {name, msg} = this.getPrivateInfo(value);
                     this.msgInput.val(value.replace(msg, ''));
-                    this.newMsg(`（私信）我对${name}说：${msg}`, 'warning');
+                    this.createMsg( new m.msg_private(`我对${name}说：${msg}`) );
                 }else{
                     this.msgInput.val('');
-                    this.newMsg(`（我）${this.user.name}：${value}`, 'success');
+                    this.createMsg( new m.msg_self(`${this.user.name}：${value}`) );
                 }
 
                 this.socket.emit('chat message', value);
@@ -108,7 +110,7 @@ $(function () {
                         let reader = new FileReader();
                         reader.onload = (e) => {
                             let imgUrl = e.target.result;
-                            this.newImg(`（我）${this.user.name}`, imgUrl, 'success');
+                            this.createMsg( new m.img_self(this.user.name, imgUrl) );
                             this.socket.emit('chat image', this.user.name , imgUrl);
                         }
                         reader.readAsDataURL(file);
@@ -156,6 +158,7 @@ $(function () {
          * 监听socket消息
          */
         listenSocket() {
+
             let socket = this.socket;
             /**
              * 当前用户加入成功
@@ -168,31 +171,31 @@ $(function () {
              * 有用户加入
              */
             socket.on('all:user join', (user) => {
-                this.newMsg(`（系统）${user.name} 加入聊天，一起说几句吧!`, 'danger');
+                this.createMsg( new m.msg_system(`${user.name} 加入聊天，一起说几句吧!`) );
             });
             /**
              * 有用户离开
              */
             socket.on('all:user leave', (user) => {
-                this.newMsg(`（系统）${user.name} 悄悄地离开了...`, 'danger');
+                this.createMsg( new m.msg_system(`${user.name} 悄悄地离开了...`) );
             });
             /**
              * 接收聊天信息 
              */
-            socket.on('other:chat image', (name, msg) => {
-                this.newImg(name, msg);
+            socket.on('other:chat image', (name, img) => {
+                this.createMsg( new m.img_normal(name, img) );
             });
             /**
              * 接收图片信息 
              */
             socket.on('other:chat message', (msg) => {
-                this.newMsg(msg);
+                this.createMsg( new m.msg_normal(msg) );
             });
             /**
              * 接受私信
              */
             socket.on('private:chat message', (name, msg) => {
-                this.newMsg(`（私信）${name}对我说：${msg}`, 'warning');
+                this.createMsg( new m.msg_private(`${name}对我说：${msg}`) );
             });
             /**
              * 刷新用户列表 
@@ -215,7 +218,7 @@ $(function () {
              * 系统通知自己
              */
             socket.on('self:notify self', (msg) => {
-                this.newMsg(msg, 'danger');
+                this.createMsg( new m.msg_system(msg) );
             });
         }
         privateChar(){
@@ -229,16 +232,15 @@ $(function () {
             });
         }
         
-        newMsg(msg='', clazz='') {
-            return this.msgBox.append(`<tr class='${clazz}'><td>${msg}</td></tr>`);
-        }
-        newImg(name='', imgUrl='', clazz='') {
-            this.newMsg(`${name}：<img width="60%" src="${imgUrl}">`);
-        }
         getBadge(user={}) {
             return user.private > 0 ? `<span class="badge">${user.private}</span>` : '';
         }
+
+        createMsg(msgObj){
+            this.msgBox.append( msgObj.getMsg() );
+        }
     }
+    
 
     new chatRoom();
 });

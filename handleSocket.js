@@ -35,7 +35,7 @@ let handle = (io, socket) => {
             if(targetSocket){
                 privateChat(targetSocket, user.name, msg);
             }else{//已下线
-                notifyself(`（系统）${name} 已下线，消息未送达...`);
+                notifyself(`${name} 已下线，消息未送达...`);
             }
         }else{
             let msg = `${user.name}：${_msg}`;
