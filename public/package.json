@@ -1,0 +1,14 @@
+{
+  "name": "websocket-chatroom-public",
+  "version": "1.0.0",
+  "description": "chatroom based on websocket",
+  "author": "EnjoyMa",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Martin0417/websocket-chatroom.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "script-type-module": "^1.0.1"
+  }
+}

@@ -2,11 +2,16 @@
   "name": "websocket-chatroom",
   "version": "1.0.0",
   "description": "chatroom based on websocket",
+  "keywords": [
+    "websocket",
+    "socket.io",
+    "chatroom"
+  ],
   "scripts": {
     "test": "mocha",
-    "start": "npm i && node app.js"
+    "start": "npm i -g recursive-install && npm-recursive-install && node app.js"
   },
-  "author": "EnjoyMa",
+  "author": "EnjoyMa <18767122887@163.com>",
   "repository": {
     "type": "git",
     "url": "git@github.com:Martin0417/websocket-chatroom.git"
@@ -15,5 +20,8 @@
   "dependencies": {
     "express": "^4.15.2",
     "socket.io": "^2.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^3.4.2"
   }
 }
