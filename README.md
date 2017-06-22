@@ -1,12 +1,11 @@
 # 基于websocket的聊天室
 
 ### 启动
-1. `npm i`
-2. `npm start`
+`npm start`
 
 ### 依赖
 - 服务端：socket.io, express
-- 客户端：socket.io, jquery, bootstrap
+- 客户端：socket.io, jquery, bootstrap, script-type-module
 
 ### Improvements
 代码主要是对[socket.io官方聊天室](httphttps://socket.io/get-started/chat/)例子的完善，有以下几点：
