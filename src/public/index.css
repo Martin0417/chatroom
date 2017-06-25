@@ -11,7 +11,7 @@ body { font: 13px Helvetica, Arial; }
 .imgForm{display: none;}
 
 .userList{
-    position: fixed;top:0;right:0;
+    /*position: fixed;top:0;right:0;*/
     width:200px;
     transition: all 1s ease;
 }

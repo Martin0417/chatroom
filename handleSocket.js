@@ -59,7 +59,7 @@ let handle = (io, socket) => {
         socketMap[id] = socket;
         userList.push(user);
 
-        addUserSuccess();
+        addUserSuccess(name);
         refreshUserList(userList);
         userJoin(user);
     });

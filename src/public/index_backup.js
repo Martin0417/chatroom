@@ -1,4 +1,5 @@
 import m from './message.js';
+import './index.css';
 
 $(function () {
 
