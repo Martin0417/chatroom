@@ -1,6 +1,21 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font: 13px Helvetica, Arial; }
 
+.headerWrap{
+    display: flex;
+    justify-content: flex-start;
+    align-items:center;
+}
+.headerWrap .logo{
+    margin:0px 15px 0 -28px;
+    width:40px;height:40px;
+    background: url(/dist/res/logo.png);
+    background-size: contain;
+}
+.headerWrap .title{
+    font-size:16px;color:#fff;
+}
+
 .formBox{display: flex; justify-content: space-between;align-items: center; position: fixed; bottom: 0; padding: 3px;  width: 100%;background: #000;}
 
 .msgForm {display: flex; justify-content: space-between;align-items: center; width: 90%; }
@@ -11,9 +26,13 @@ body { font: 13px Helvetica, Arial; }
 .imgForm{display: none;}
 
 .userList{
-    /*position: fixed;top:0;right:0;*/
     width:200px;
     transition: all 1s ease;
 }
+.userList .list-group-item{
+    cursor: pointer;
+}
 
 .messagesBox img{ vertical-align: bottom;}
+
+::selection{background:lightsalmon !important;}

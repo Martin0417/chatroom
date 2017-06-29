@@ -2,8 +2,10 @@ import {combineReducers} from 'redux';
 import {
     CACHE_SOCKET, ADD_USER, //socket
     SHOW_LOGIN_MODAL, HIDE_LOGIN_MODAL, SET_BTN_LOADING, //登录弹窗
-    SHOW_FORM_BOX, //输入框
-} from './actions';
+    SHOW_FORM_BOX, SET_INPUT_VALUE, //输入框
+    APPEND_TO_MESSAGE_LIST, //消息列表
+    REFRESH_USER_LIST, //用户列表
+} from 'actions';
 
 function socket(state = {instance: null, name: ''}, action){
     switch(action.type){
@@ -40,11 +42,15 @@ function loginModal(state = {visible: false,loading: false, name: ''}, action){
     }
 }
 
-function formBox(state = {visible: false}, action){
+function formBox(state = {visible: false, inputValue: ''}, action){
     switch(action.type){
         case SHOW_FORM_BOX:
             return Object.assign({}, state, {
                 visible: true
+            });
+        case SET_INPUT_VALUE:
+            return Object.assign({}, state, {
+                inputValue: action.value
             });
         default:
             return state;
@@ -53,8 +59,8 @@ function formBox(state = {visible: false}, action){
 
 function messageList(state = [], action){
     switch(action.type){
-        case 11: 
-            return state;
+        case APPEND_TO_MESSAGE_LIST: 
+            return [...state, action.message];
         default: 
             return state;
     }
@@ -62,8 +68,8 @@ function messageList(state = [], action){
 
 function userList(state = [], action){
     switch(action.type){
-        case 11: 
-            return state;
+        case REFRESH_USER_LIST: 
+            return action.userList;
         default: 
             return state;
     }

@@ -1,16 +1,19 @@
 {
   "name": "websocket-chatroom",
   "version": "1.0.0",
-  "description": "chatroom based on websocket",
+  "description": "chatroom based on websocket,react",
   "keywords": [
     "websocket",
     "socket.io",
+    "react",
+    "redux",
     "chatroom"
   ],
   "scripts": {
     "test": "mocha",
-    "start": "node app.js",
-    "build": "webpack && node app.js"
+    "start": "npm run build",
+    "dev": "cross-env NODE_ENV=development node app.js",
+    "build": "cross-env NODE_ENV=production webpack --color --config webpack.prod.config && cross-env NODE_ENV=production node app.js"
   },
   "author": "EnjoyMa <18767122887@163.com>",
   "repository": {
@@ -39,7 +42,9 @@
     "babel-plugin-import": "^1.2.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "cross-env": "^5.0.1",
     "mocha": "^3.4.2",
+    "url-loader": "^0.5.9",
     "webpack-dev-middleware": "^1.11.0",
     "webpack-hot-middleware": "^2.18.0"
   }

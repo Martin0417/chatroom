@@ -10,29 +10,30 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-// process.on('uncaughtException', (e) => {
-//     _.error(e);
-// });
+const [isProd, isDev] = [process.env.NODE_ENV === 'production', process.env.NODE_ENV !== 'production'];
+const dir = isProd ? 'dist' : 'src';
 
-let webpackConf = require('./webpack.config');
-let compiler = webpack(webpackConf);
+process.on('uncaughtException', (e) => {
+    _.error(e);
+});
 
-// app.use('/public', express.static(`${__dirname}/src/public`));
-// app.use('/dist', express.static(`${__dirname}/src/dist`));
+app.use(`/dist`, express.static(`${__dirname}/public/${dir}`));
+app.use(favicon(`${__dirname}/public/src/favicon.ico`));
 
-app.use(favicon(`${__dirname}/src/public/favicon.ico`));
-
-//webpack中间件
-app.use(webpackDevMiddleware(compiler, {
-  publicPath: webpackConf.output.publicPath
-}));
-
-app.use(webpackHotMiddleware(compiler, {
-  path: '/__webpack_hmr'
-}));
+if(isDev){
+  let webpackConf = require(`./webpack.dev.config`);
+  let compiler = webpack(webpackConf);
+  //webpack开发中间件
+  app.use(webpackDevMiddleware(compiler, {
+    publicPath: webpackConf.output.publicPath
+  }));
+  app.use(webpackHotMiddleware(compiler, {
+    path: '/__webpack_hmr'
+  }));
+}
 
 app.get('/', (req, res) => {
-  res.sendFile(`${__dirname}/src/public/index.html`);
+  res.sendFile(`${__dirname}/public/src/index.html`);
 });
 
 io.on('connection', handle.bind(this, io));

@@ -19,7 +19,9 @@ class LoginModal extends Component {
     }
 
     handleOk(){
-        this.props.onConfirmName(this.state.name);
+        let {name} = this.state;
+        let {socket} = this.props;
+        this.props.onConfirmName({name, socket});
     }
 
     handleInput(e){
@@ -45,7 +47,7 @@ class LoginModal extends Component {
                     ]}
                 >
                     <p>输入用户名：</p>
-                    <p><input ref={(elem) => self.nameInput = elem} type="text" value={this.state.name} onChange={this.handleInput.bind(this)}/></p>
+                    <p><input autoFocus ref={input => input && input.focus()} autoFocus type="text" value={this.state.name} onChange={this.handleInput.bind(this)}/></p>
                 </Modal>
             </div>
         );

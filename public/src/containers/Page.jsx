@@ -5,9 +5,9 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Layout, Icon } from 'antd';
 const { Header, Content, Sider } = Layout;
-import FormBox from '../components/FormBox';
-import MessageList from '../components/MessageList';
-import UserList from '../components/UserList';
+import FormBox from 'containers/FormBox';
+import MessageList from 'containers/MessageList';
+import UserList from 'containers/UserList';
 
 const mapStateToProps = (state, ownProps) => {
     let {visible} = state.formBox;
@@ -23,9 +23,9 @@ class Page extends Component{
 
     return (
       <Layout>
-        <Header className="header">
+        <Header className="header headerWrap">
           <div className="logo" />
-          <p className="title">聊天室</p>
+          <p className="title">Enjoy Chatting</p>
         </Header>
         <Layout>
           <Content style={{ background: '#fff', padding: 20, margin: 0, minHeight: 280 }}>

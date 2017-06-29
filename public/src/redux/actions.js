@@ -13,6 +13,13 @@ export const SET_BTN_LOADING = 'SET_BTN_LOADING';
 
 //输入框
 export const SHOW_FORM_BOX = 'SHOW_FORM_BOX';
+export const SET_INPUT_VALUE = 'SET_INPUT_VALUE';
+
+//消息列表
+export const APPEND_TO_MESSAGE_LIST = 'APPEND_TO_MESSAGE_LIST';
+
+//用户列表
+export const REFRESH_USER_LIST = 'REFRESH_USER_LIST';
 
 /**
  * action创造函数（传递参数）
@@ -41,4 +48,16 @@ export function setBtnLoading(){
 export function showFormBox(){
     return {type: SHOW_FORM_BOX}
 }
+export function setInputValue(value){
+    return {type: SET_INPUT_VALUE, value}
+}
 
+//消息列表
+export function appendToMessageList(message){
+    return {type: APPEND_TO_MESSAGE_LIST, message}
+}
+
+//用户列表
+export function refreshUserList(userList){
+    return {type: REFRESH_USER_LIST, userList}
+}

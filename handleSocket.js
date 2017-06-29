@@ -21,7 +21,6 @@ let handle = (io, socket) => {
     let addUserSuccess   = _.notifyself(socket, 'add user success');//用户添加成功
     let notifyself       = _.notifyself(socket, 'notify self');//系统通知自己
 
-    _.log('a user connected');
     // 初始化在线用户列表
     refreshUserList(userList);
     /**
@@ -62,6 +61,8 @@ let handle = (io, socket) => {
         addUserSuccess(name);
         refreshUserList(userList);
         userJoin(user);
+
+        _.log(`☆☆☆ current users count: ${userList.length} ☆☆☆`);
     });
     /**
      * 客户端断开连接
