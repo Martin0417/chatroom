@@ -16,6 +16,15 @@ export default function listenSocket (socket, dispatch){
      */
     dispatch(cacheSocket(socket));
     /**
+     * 心跳机制
+     */
+    // socket.on('ping', () => {
+    //     alert('receive ping');
+    // });
+    // socket.on('pong', () => {
+    //     alert('receive pong');
+    // })
+    /**
      * 当前用户加入成功
      */
     socket.on('self:add user success', (name) => {
@@ -78,11 +87,12 @@ export default function listenSocket (socket, dispatch){
      * 系统通知自己
      */
     socket.on('self:notify self', (msg) => {
-        dispatch(appendToMessageList({
-            type: 'text',
-            role: 'self',
-            content: msg
-        }));
+        message.error(msg, 1.5);
+        // dispatch(appendToMessageList({
+        //     type: 'text',
+        //     role: 'system',
+        //     content: msg
+        // }));
     });
     /**
      * 刷新用户列表 

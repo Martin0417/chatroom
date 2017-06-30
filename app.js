@@ -8,7 +8,10 @@ const handle = require('./handleSocket');
 
 const app = express();
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const io = require('socket.io')(http, {
+  // pingInterval: 2000,
+  // pingTimeout: 1000
+});
 
 const [isProd, isDev] = [process.env.NODE_ENV === 'production', process.env.NODE_ENV !== 'production'];
 

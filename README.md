@@ -1,6 +1,7 @@
 # 基于websocket、react的聊天室
 
 ### 启动
+- `npm i`
 - 开发环境：`npm run dev`
 - 生产环境：`npm run build`
 
@@ -9,7 +10,7 @@
 - 客户端：`socket.io, react, redux, antd, webpack, bootstrap`
 
 ### Improvements
-代码主要是对[socket.io官方聊天室](httphttps://socket.io/get-started/chat/)例子的完善和前端重构，有以下几点：
+代码主要是对[socket.io官方聊天室](httphttps://socket.io/get-started/chat/)例子的**完善**和**前端重构**，有以下几点：
 
 1. Broadcast a message to connected users when someone connects or disconnects
 1. Add support for nicknames
