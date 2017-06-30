@@ -1,14 +1,15 @@
-# 基于websocket的聊天室
+# 基于websocket、react的聊天室
 
 ### 启动
-`npm start`
+- 开发环境：`npm run dev`
+- 生产环境：`npm run build`
 
-### 依赖
-- 服务端：socket.io, express
-- 客户端：socket.io, jquery, bootstrap, script-type-module
+### 技术栈
+- 服务端：`nodejs, socket.io, express`
+- 客户端：`socket.io, react, redux, antd, webpack, bootstrap`
 
 ### Improvements
-代码主要是对[socket.io官方聊天室](httphttps://socket.io/get-started/chat/)例子的完善，有以下几点：
+代码主要是对[socket.io官方聊天室](httphttps://socket.io/get-started/chat/)例子的完善和前端重构，有以下几点：
 
 1. Broadcast a message to connected users when someone connects or disconnects
 1. Add support for nicknames
@@ -19,6 +20,8 @@
 
 ### Todo
 - session
-- 心跳机制
-- 界面完善
 - ...
+
+### 前端重构前版本
+- 客户端技术栈： `socket.io, jquery, bootstrap, script-type-module`
+- 分支：[feature_jqueryES6ScriptModule_0622](httphttps://github.com/Martin0417/websocket-chatroom/tree/feature_jqueryES6ScriptModule_0622)
