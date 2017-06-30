@@ -11,14 +11,16 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 const [isProd, isDev] = [process.env.NODE_ENV === 'production', process.env.NODE_ENV !== 'production'];
-const dir = isProd ? 'dist' : 'src';
 
 process.on('uncaughtException', (e) => {
     _.error(e);
 });
 
-app.use(`/dist`, express.static(`${__dirname}/public/${dir}`));
-app.use(favicon(`${__dirname}/public/src/favicon.ico`));
+app.use(favicon(`${__dirname}/webapp/src/favicon.ico`));
+
+if(isProd){
+  app.use('/dist', express.static(`${__dirname}/webapp/dist`));
+}
 
 if(isDev){
   let webpackConf = require(`./webpack.dev.config`);
@@ -33,7 +35,7 @@ if(isDev){
 }
 
 app.get('/', (req, res) => {
-  res.sendFile(`${__dirname}/public/src/index.html`);
+  res.sendFile(`${__dirname}/webapp/src/index.html`);
 });
 
 io.on('connection', handle.bind(this, io));

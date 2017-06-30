@@ -1,26 +1,33 @@
 const path = require('path');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 let getRootPath = (rootPath) => (subPath) => {
   return path.join(__dirname, rootPath, subPath);
 }
-let getSubPath = getRootPath('./public/src/');
+let getSubPath = getRootPath('./webapp/src/');
 
 module.exports = {
   entry: [
-    './public/src/index'
+    './webapp/src/index'
   ],
   output: {
     publicPath: '/dist/',
-    path: `${__dirname}/public/dist/`,
-    filename: 'bundle.js'
+    path: `${__dirname}/webapp/dist/`,
+    filename: 'js/bundle.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.(png|jpg|gif)$/, loader: 'url-loader?name=images/[name].[ext]&limit=8192'
+        test: /\.(png|jpg|gif)$/, 
+        use: 'url-loader?name=res/[name].[hash:8].[ext]&limit=8192'
       },
-      {test: /\.css$/, loader: 'style-loader!css-loader'},
-      {test: /\.jsx?$/, loader: 'babel-loader'}
+      {
+        test: /\.css$/, 
+        use: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader?minimize=true'})
+      },
+      {
+        test: /\.jsx?$/, use: 'babel-loader'
+      }
     ]
   },
   resolve: {
@@ -32,5 +39,8 @@ module.exports = {
       containers: getSubPath('./containers'),
       util: getSubPath('./util'),
     }
-  }
+  },
+  plugins: [
+    new ExtractTextPlugin("css/bundle.css"), 
+  ]
 }

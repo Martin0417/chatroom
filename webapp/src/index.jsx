@@ -13,7 +13,10 @@ if (module.hot) {
     module.hot.accept();
 }
 
-let store = createStore(reducers);
+let store = createStore(
+    reducers,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // chrome调试redux的插件
+);
 
 class Index extends Component{
 
